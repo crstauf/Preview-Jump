@@ -8,10 +8,11 @@ Author: Caleb Stauffer
 Author URI: http://develop.calebstauffer.com
 */
 
-new css_preview_jump;
+add_action('init',array('css_preview_jump','hooks'));
 class css_preview_jump {
 
-	function __construct() {
+	function hooks() {
+		if (is_admin() || !current_user_can('edit_others_posts')) return;
 		add_filter('the_content',array(__CLASS__,'add_first_diff_marker'));
 		add_action('admin_bar_menu',array(__CLASS__,'admin_bar_menu'),99);
 	}
